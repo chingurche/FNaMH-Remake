@@ -45,7 +45,7 @@ public class ActionButton : MonoBehaviour
             switch (_currentCameraIndex)
             {
                 case 1: case 3: case 5:
-                    _buttonText.text = "FIX";
+                    _buttonText.text = "MDS";
                     break;
                 case 4:
                     _buttonText.text = "RING";

@@ -10,7 +10,7 @@ public class Counter : MonoBehaviour
     private CameraSwitcher _cameraSwitcher;
     private IEnumerator _counterCoroutine;
 
-    private bool is_Attacking;
+    private bool _isAttacking;
 
     [SerializeField] private AudioClip _ringClip;
     [SerializeField] private AudioClip _oretClip;
@@ -27,7 +27,7 @@ public class Counter : MonoBehaviour
         _noiseAlphaChanger = FindObjectOfType<NoiseAlphaChanger>();
         _cameraSwitcher = FindObjectOfType<CameraSwitcher>();
 
-        is_Attacking = false;
+        _isAttacking = false;
 
         Invoke("StartCounter", _startTime);
     }
@@ -51,7 +51,7 @@ public class Counter : MonoBehaviour
 
     private IEnumerator CounterAttack()
     {
-        is_Attacking = true;
+        _isAttacking = true;
         _audioSource.Play();
         if (_cameraSwitcher.cameraIndex == 4) { _noiseAlphaChanger.ResetCanvasGroupAlpha(); }
         _animator.Play("Jump", 0);
@@ -64,20 +64,20 @@ public class Counter : MonoBehaviour
         _animator.Play("AttackTransform", 1);
         _audioSource.Stop();
         _audioSource.PlayOneShot(_oretClip);
-        is_Attacking = false;
+        _isAttacking = false;
     }
 
     public void RingBell()
     {
         _audioSource.Stop();
 
-        if (is_Attacking)
+        if (_isAttacking)
         {
             if (_cameraSwitcher.cameraIndex == 4) { _noiseAlphaChanger.ResetCanvasGroupAlpha(); }
             StopCoroutine(_counterCoroutine);
             _counterCoroutine = CounterSleep();
             StartCoroutine(_counterCoroutine);
-            is_Attacking = false;
+            _isAttacking = false;
         }
         
         _audioSource.PlayOneShot(_ringClip);

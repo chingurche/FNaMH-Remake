@@ -9,6 +9,7 @@ public class Max : MonoBehaviour
 
     [SerializeField] private GameObject[] _maxObjects;
     [SerializeField] private CanvasGroup _loadingCanvasGroup;
+    [SerializeField] private GameObject _maxScreamObject;
 
     [SerializeField] private float _maxStartTime;
     [SerializeField] private float _maxSleepTime;
@@ -44,15 +45,17 @@ public class Max : MonoBehaviour
     {
         isMaxAttacking = true;
         _attackingMaxIndex = Random.Range(1, _maxObjects.Length + 1); Debug.Log(_attackingMaxIndex);
-        for (int i = 1; i <= _maxObjects.Length; i++)
-        {
-            if (i == _attackingMaxIndex) { _maxObjects[i - 1].gameObject.SetActive(true); }
-            else { _maxObjects[i - 1].gameObject.SetActive(false); }
-        }
 
         yield return new WaitForSeconds(_maxAttackTime);
 
         isMaxAttacking = false;
+        _maxCoroutine = MaxScream();
+        StartCoroutine(_maxCoroutine);
+    }
+
+    public IEnumerator MaxScream()
+    {
+        yield return new WaitForSeconds(1);
     }
 
     public void ClickFixButton(int cameraIndex)
@@ -71,6 +74,15 @@ public class Max : MonoBehaviour
 
         _loadingCanvasGroup.alpha = 0f;
         _loadingCanvasGroup.blocksRaycasts = false;
-        if (isMaxHere) { _maxObjects[cameraIndex-1].GetComponent<Animator>().Play("Max"); }
+        if (isMaxHere)
+        { 
+            _maxObjects[_attackingMaxIndex-1].SetActive(true);
+            _maxObjects[_attackingMaxIndex-1].GetComponent<Animator>().Play("Max");
+            yield return new WaitForSeconds(1);
+            _maxObjects[_attackingMaxIndex-1].SetActive(false);
+            StopCoroutine(_maxCoroutine);
+            _maxCoroutine = MaxSleep();
+            StartCoroutine(_maxCoroutine);
+        }
     }
 }
