@@ -17,6 +17,7 @@ public class Max : MonoBehaviour
     [SerializeField] private Color _unNormalButtonColor;
 
     [SerializeField] private float _maxStartTime;
+    [SerializeField] private float _minSleepTime;
     [SerializeField] private float _maxSleepTime;
     [SerializeField] private float _maxAttackTime;
     [SerializeField] private float _maxFixTime;
@@ -40,7 +41,7 @@ public class Max : MonoBehaviour
 
     private IEnumerator MaxSleep()
     {
-        yield return new WaitForSeconds(_maxSleepTime);
+        yield return new WaitForSeconds(Random.Range(_minSleepTime, _maxSleepTime));
 
         _maxCoroutine = MaxAttack();
         StartCoroutine(_maxCoroutine);
@@ -98,6 +99,7 @@ public class Max : MonoBehaviour
             {
                 cameraButton.ChangeButtonColor(_normalButtonColor);
             }
+            isMaxAttacking = false;
 
             yield return new WaitForSeconds(1);
 

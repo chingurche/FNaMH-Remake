@@ -15,8 +15,8 @@ public class WalkingEnemy : MonoBehaviour
     [SerializeField] private int _rollbackPhase;
     [SerializeField] private float _enemyStartPhaseTime;
     [SerializeField] private float _enemyLastPhaseTime;
-    [SerializeField] private float _enemyPhaseAverageTime;
-    [SerializeField] private float _enemyPhaseDeltaTime;
+    [SerializeField] private float _enemyPhaseMinTime;
+    [SerializeField] private float _enemyPhaseMaxTime;
     [SerializeField] private EnemyPhase[] _enemyPhases;
 
     private void Awake()
@@ -44,9 +44,7 @@ public class WalkingEnemy : MonoBehaviour
 
     private IEnumerator PhaseEnumerator()
     {
-        yield return new WaitForSeconds(Random.Range(
-            _enemyPhaseAverageTime - _enemyPhaseDeltaTime,
-            _enemyPhaseAverageTime + _enemyPhaseDeltaTime));
+        yield return new WaitForSeconds(Random.Range(_enemyPhaseMinTime, _enemyPhaseMaxTime));
 
         ChangePhase(_currentPhase + 1);
 

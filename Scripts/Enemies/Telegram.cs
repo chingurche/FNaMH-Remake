@@ -12,11 +12,14 @@ public class Telegram : MonoBehaviour
 
     [SerializeField] private Canvas _screamMessangeCanvas;
     [SerializeField] private GameObject _screamMessangePrefab;
+    [SerializeField] private AudioSource _notificationAudioSource;
+    [SerializeField] private AudioSource _messangeAudioSource;
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private RawImage[] _messanges;
     
     [SerializeField] private float _startTime;
-    [SerializeField] private float _sleepTime;
+    [SerializeField] private float _minSleepTime;
+    [SerializeField] private float _maxSleepTime;
     [SerializeField] private float _attackTime;
     [SerializeField] private float _screamMessangeSpawnTime;
     [SerializeField] private float _screamMessangeEndTime;
@@ -38,7 +41,7 @@ public class Telegram : MonoBehaviour
 
     private IEnumerator TelegramSleep()
     {
-        yield return new WaitForSeconds(_sleepTime);
+        yield return new WaitForSeconds(Random.Range(_minSleepTime, _maxSleepTime));
 
         _telegramCoroutine = TelegramAttack();
         StartCoroutine(_telegramCoroutine);
@@ -47,7 +50,7 @@ public class Telegram : MonoBehaviour
     private IEnumerator TelegramAttack()
     {
         _isAttacking = true;
-
+        _notificationAudioSource.Play();
         _messangesClosed = 0;
         foreach (RawImage messange in _messanges)
         {
@@ -87,6 +90,8 @@ public class Telegram : MonoBehaviour
     public void CloseMessange(int messangeIndex)
     {
         if (!isTelegramWorking) { return; }
+        
+        _messangeAudioSource.Play();
 
         _messanges[messangeIndex].gameObject.SetActive(false);
 

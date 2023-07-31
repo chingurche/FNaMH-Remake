@@ -16,7 +16,8 @@ public class Counter : MonoBehaviour
     [SerializeField] private AudioClip _oretClip;
 
     [SerializeField] private float _startTime;
-    [SerializeField] private float _sleepingTime;
+    [SerializeField] private float _minSleepTime;
+    [SerializeField] private float _maxSleepTime;
     [SerializeField] private float _attackTime;
 
     private void Start()
@@ -43,7 +44,7 @@ public class Counter : MonoBehaviour
         _animator.Play("Lying", 0);
         _animator.Play("LyingTransform", 1);
 
-        yield return new WaitForSeconds(_sleepingTime);
+        yield return new WaitForSeconds(Random.Range(_minSleepTime, _maxSleepTime));
 
         _counterCoroutine = CounterAttack();
         StartCoroutine(_counterCoroutine);

@@ -8,6 +8,7 @@ public class ActionButton : MonoBehaviour
 {
     private TMP_Text _buttonText;
     private CanvasGroup _canvasGroup;
+    private Button _button;
 
     private Max _max;
     private Counter _counter;
@@ -18,6 +19,7 @@ public class ActionButton : MonoBehaviour
     {
         _buttonText = GetComponentInChildren<TMP_Text>();
         _canvasGroup = GetComponent<CanvasGroup>();
+        _button = GetComponent<Button>();
 
         _max = FindObjectOfType<Max>();
         _counter = FindObjectOfType<Counter>();
@@ -53,7 +55,12 @@ public class ActionButton : MonoBehaviour
             }
 
             _canvasGroup.alpha = 1;
+            _button.interactable = true;
         }
-        else{ _canvasGroup.alpha = 0; }
+        else
+        {
+            _canvasGroup.alpha = 0;
+            _button.interactable = false;
+        }
     }
 }
