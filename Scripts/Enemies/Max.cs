@@ -8,8 +8,13 @@ public class Max : MonoBehaviour
     private int _attackingMaxIndex;
 
     [SerializeField] private GameObject[] _maxObjects;
+    [SerializeField] private CameraButton[] _cameraButtons;
     [SerializeField] private CanvasGroup _loadingCanvasGroup;
+    [SerializeField] private AudioSource _mdtAudioSource;
     [SerializeField] private GameObject _maxScreamObject;
+
+    [SerializeField] private Color _normalButtonColor;
+    [SerializeField] private Color _unNormalButtonColor;
 
     [SerializeField] private float _maxStartTime;
     [SerializeField] private float _maxSleepTime;
@@ -45,30 +50,41 @@ public class Max : MonoBehaviour
     {
         isMaxAttacking = true;
         _attackingMaxIndex = Random.Range(1, _maxObjects.Length + 1); Debug.Log(_attackingMaxIndex);
+        foreach (CameraButton cameraButton in _cameraButtons)
+        {
+            cameraButton.ChangeButtonColor(_unNormalButtonColor);
+        }
+        _mdtAudioSource.Play();
 
         yield return new WaitForSeconds(_maxAttackTime);
 
         isMaxAttacking = false;
+        _mdtAudioSource.Stop();
         _maxCoroutine = MaxScream();
         StartCoroutine(_maxCoroutine);
     }
 
     public IEnumerator MaxScream()
     {
+        _maxScreamObject.SetActive(true);
+        FindAnyObjectByType<PlayerDeath>().Death();
+
         yield return new WaitForSeconds(1);
+
+        FindObjectOfType<PlayerDeath>().ExitMenu();
     }
 
-    public void ClickFixButton(int cameraIndex)
+    public void ClickMDSButton(int cameraIndex)
     {
         if (!isMaxAttacking) { return; }
 
-        _loadingCanvasGroup.alpha = 1f;
+        _loadingCanvasGroup.alpha = 0.5f;
         _loadingCanvasGroup.blocksRaycasts = true;
-        if (cameraIndex == _attackingMaxIndex) { StartCoroutine(FixCamera(cameraIndex, true)); }
-        else { StartCoroutine(FixCamera(cameraIndex, false)); }
+        if (cameraIndex == _attackingMaxIndex) { StartCoroutine(MDSAction(cameraIndex, true)); }
+        else { StartCoroutine(MDSAction(cameraIndex, false)); }
     }
 
-    private IEnumerator FixCamera(int cameraIndex, bool isMaxHere)
+    private IEnumerator MDSAction(int cameraIndex, bool isMaxHere)
     {
         yield return new WaitForSeconds(_maxFixTime);
 
@@ -78,11 +94,22 @@ public class Max : MonoBehaviour
         { 
             _maxObjects[_attackingMaxIndex-1].SetActive(true);
             _maxObjects[_attackingMaxIndex-1].GetComponent<Animator>().Play("Max");
+            foreach (CameraButton cameraButton in _cameraButtons)
+            {
+                cameraButton.ChangeButtonColor(_normalButtonColor);
+            }
+
             yield return new WaitForSeconds(1);
+
             _maxObjects[_attackingMaxIndex-1].SetActive(false);
+            _mdtAudioSource.Stop();
             StopCoroutine(_maxCoroutine);
             _maxCoroutine = MaxSleep();
             StartCoroutine(_maxCoroutine);
+        }
+        else
+        {
+            _cameraButtons[cameraIndex-1].ChangeButtonColor(_normalButtonColor);
         }
     }
 }

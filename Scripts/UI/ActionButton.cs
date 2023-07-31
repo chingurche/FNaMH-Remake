@@ -28,7 +28,7 @@ public class ActionButton : MonoBehaviour
         switch (_currentCameraIndex)
         {
             case 1: case 3: case 5:
-                _max.ClickFixButton(Convert.ToInt32(_currentCameraIndex / 2 + 1f));
+                _max.ClickMDSButton(Convert.ToInt32(_currentCameraIndex / 2 + 1f));
                 break;
             case 4:
                 _counter.RingBell();
