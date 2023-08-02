@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class WindowDoorGetter : MonoBehaviour, IRayGetter
 {
+    private Rotator _rotator;
+    private void Start()
+    {
+        _rotator = GetComponent<Rotator>();
+    }
     void IRayGetter.SendToReceiver()
     {
         if (FindObjectOfType<Telegram>().isTelegramWorking
-        && !GetComponent<Rotator>().isOpening) { return; }
+        || !_rotator.isOpening) { return; }
         
-        GetComponent<Rotator>().isClosing = true;
+        _rotator.isClosing = true;
     }
 }

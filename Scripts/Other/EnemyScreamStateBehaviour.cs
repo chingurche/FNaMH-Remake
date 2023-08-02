@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyScreamStateBehaviour : StateMachineBehaviour
+public class EnemyScreamStateBehaviour : StateMachineBehaviour, IOffable
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Max : MonoBehaviour
+public class Max : MonoBehaviour, IOffable
 {
     private IEnumerator _maxCoroutine;
 
@@ -72,7 +72,7 @@ public class Max : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        FindObjectOfType<PlayerDeath>().ExitMenu();
+        FindAnyObjectByType<PlayerDeath>().ExitMenu();
     }
 
     public void ClickMDSButton(int cameraIndex)

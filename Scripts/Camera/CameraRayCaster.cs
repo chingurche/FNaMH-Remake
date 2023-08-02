@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
-public class CameraRayCaster : MonoBehaviour
+public class CameraRayCaster : MonoBehaviour, IOffable
 {
     private Camera _camera;
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerDeath : MonoBehaviour
+public class PlayerDeath : MonoBehaviour, IOffable
 {
     private Animator _animator;
 

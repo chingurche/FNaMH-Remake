@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraRotater : MonoBehaviour
+public class CameraRotater : MonoBehaviour, IOffable
 {
     [Range(0, 0.5f)]
     [SerializeField] private float _rotationScreenPart;

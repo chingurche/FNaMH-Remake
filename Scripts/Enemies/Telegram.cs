@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class Telegram : MonoBehaviour
+public class Telegram : MonoBehaviour, IOffable
 {
     private CameraSystemSwitcher _cameraSystemSwitcher;
     private IEnumerator _telegramCoroutine;

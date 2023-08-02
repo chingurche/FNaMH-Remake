@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Rotator : MonoBehaviour
+public class Rotator : MonoBehaviour, IOffable
 {
     private Vector3 _startRotation;
 

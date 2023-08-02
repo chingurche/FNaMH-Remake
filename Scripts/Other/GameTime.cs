@@ -12,9 +12,12 @@ public class GameTime : MonoBehaviour
     [SerializeField] private AudioSource _endMusic;
     [SerializeField] private GameObject _secretObject;
     [SerializeField] private GameObject _secretButton;
+    [SerializeField] private GameObject _blackPanel;
+    [SerializeField] private GameObject _deadNote;
     
     private void Start()
     {
+        if (PlayerPrefs.GetInt("isDead") == 1) { _deadNote.SetActive(true); }
         _isTimeRandom = false;
         StartCoroutine(TimeEnumerator());
     }
@@ -42,6 +45,15 @@ public class GameTime : MonoBehaviour
         _secretObject.SetActive(true);
         _secretButton.SetActive(true);
         yield return new WaitForSeconds(10);
+        _blackPanel.SetActive(true);
+        foreach (MonoBehaviour script in FindObjectsOfType<MonoBehaviour>()) 
+        {
+            if (script.TryGetComponent<IOffable>(out IOffable offableScript))
+            {
+                script.enabled = false;
+            }
+        }
+        yield return new WaitForSeconds(18);
         SceneManager.LoadScene(0);
     }
 }

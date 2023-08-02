@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Mops : MonoBehaviour
+public class Mops : MonoBehaviour, IOffable
 {
     public IEnumerator waitingCoroutine;
 

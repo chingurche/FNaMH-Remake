@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(Animator), typeof(AudioSource))]
-public class Counter : MonoBehaviour
+public class Counter : MonoBehaviour, IOffable
 {
     private Animator _animator;
     private AudioSource _audioSource;

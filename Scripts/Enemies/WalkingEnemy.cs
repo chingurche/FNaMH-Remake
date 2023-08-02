@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class WalkingEnemy : MonoBehaviour
+public class WalkingEnemy : MonoBehaviour, IOffable
 {
     private CameraSwitcher _cameraSwitcher;
     private NoiseAlphaChanger _noiseAlphaChanger;
