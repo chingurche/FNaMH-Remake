@@ -31,11 +31,11 @@ public class Rotator : MonoBehaviour
             {
                 RotateObject(-_closingTime);
             }
-            if (isClosing && transform.localEulerAngles.y <= _startRotation.y)
+            if (isClosing && transform.localEulerAngles.y < _startRotation.y)
             {
                 _walkingEnemy.StopLastPhase();
-                isClosing = false;
                 isOpening = false;
+                isClosing = false;
                 SetStartRotation();
             }
 
@@ -50,11 +50,11 @@ public class Rotator : MonoBehaviour
             {
                 RotateObject(-_closingTime);
             }
-            if (isClosing && transform.localEulerAngles.y >= _startRotation.y)
+            if (isClosing && transform.localEulerAngles.y > _startRotation.y)
             {
                 _walkingEnemy.StopLastPhase();
-                isClosing = false;
                 isOpening = false;
+                isClosing = false;
                 SetStartRotation();
             }
 

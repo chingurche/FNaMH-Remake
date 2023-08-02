@@ -8,6 +8,8 @@ public class CameraTrigger : MonoBehaviour
 
     [SerializeField] private Vector2 _playerPosition;
     [SerializeField] private Vector2 _cameraPosition;
+    [SerializeField] private Animator _maxAnimator;
+    [SerializeField] private string _maxAnimatorStateName;
 
     private void Start()
     {
@@ -24,5 +26,7 @@ public class CameraTrigger : MonoBehaviour
         _playerMovement.transform.position = _playerPosition;
         _camera.transform.position = new Vector3(_cameraPosition.x, _cameraPosition.y, -10f);
         _collider.isTrigger = false;
+
+        _maxAnimator.Play(_maxAnimatorStateName, 1);
     }
 }

@@ -5,7 +5,7 @@ public class SecretButton : MonoBehaviour
 {
     public void LoadMiniGame()
     {
-        if (FindObjectOfType<CameraSwitcher>().cameraIndex == 6)
+        if (FindObjectOfType<CameraSwitcher>().cameraIndex == 7)
         {
             SceneManager.LoadScene(2);
         }
