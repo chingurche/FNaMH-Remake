@@ -8,8 +8,9 @@ public class GameTime : MonoBehaviour
 {
     private bool _isTimeRandom;
 
-    [SerializeField] TMP_Text _timeText;
-    [SerializeField] AudioSource _endMusic;
+    [SerializeField] private TMP_Text _timeText;
+    [SerializeField] private AudioSource _endMusic;
+    [SerializeField] private GameObject _secretObject;
     
     private void Start()
     {
@@ -36,7 +37,10 @@ public class GameTime : MonoBehaviour
         yield return new WaitForSeconds(60);
         _isTimeRandom = true;
         _endMusic.Play();
-        yield return new WaitForSeconds(180);
+        yield return new WaitForSeconds(150);
+        FindObjectOfType<SecretButton>().gameObject.SetActive(true);
+        _secretObject.SetActive(true);
+        yield return new WaitForSeconds(30);
         SceneManager.LoadScene(0);
     }
 }
